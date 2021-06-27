@@ -1,0 +1,129 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="ModelGestionArticle.Store" Alias="Self" Provider="System.Data.SqlClient" ProviderManifestToken="2012" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+  <EntityContainer Name="ModelGestionArticleStoreContainer">
+    <EntitySet Name="TypeSet" EntityType="ModelGestionArticle.Store.TypeSet" store:Type="Tables" Schema="dbo" />
+    <EntitySet Name="ArticleSet" EntityType="ModelGestionArticle.Store.ArticleSet" store:Type="Tables" Schema="dbo" />
+    <AssociationSet Name="TypeArticle" Association="ModelGestionArticle.Store.TypeArticle">
+      <End Role="Type" EntitySet="TypeSet" />
+      <End Role="Article" EntitySet="ArticleSet" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="TypeSet">
+    <Key>
+      <PropertyRef Name="Num_Type" />
+    </Key>
+    <Property Name="Num_Type" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Nom_Type" Type="nvarchar(max)" Nullable="false" />
+  </EntityType>
+  <EntityType Name="ArticleSet">
+    <Key>
+      <PropertyRef Name="Ref_Article" />
+    </Key>
+    <Property Name="Ref_Article" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+    <Property Name="Designation" Type="nvarchar(max)" Nullable="false" />
+    <Property Name="Num_Type" Type="int" Nullable="false" />
+  </EntityType>
+  <Association Name="TypeArticle">
+    <End Role="Type" Type="ModelGestionArticle.Store.TypeSet" Multiplicity="1" />
+    <End Role="Article" Type="ModelGestionArticle.Store.ArticleSet" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Type">
+        <PropertyRef Name="Num_Type" />
+      </Principal>
+      <Dependent Role="Article">
+        <PropertyRef Name="Num_Type" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema xmlns="http://schemas.microsoft.com/ado/2009/11/edm" xmlns:cg="http://schemas.microsoft.com/ado/2006/04/codegeneration" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" Namespace="ModelGestionArticle" Alias="Self" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" annotation:UseStrongSpatialTypes="false">
+        <EntityContainer Name="ModelGestionArticleContainer" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="TypeSet" EntityType="ModelGestionArticle.Type" />
+          <EntitySet Name="ArticleSet" EntityType="ModelGestionArticle.Article" />
+          <AssociationSet Name="TypeArticle" Association="ModelGestionArticle.TypeArticle">
+            <End Role="Type" EntitySet="TypeSet" />
+            <End Role="Article" EntitySet="ArticleSet" />
+          </AssociationSet>
+        </EntityContainer>
+        <EntityType Name="Type">
+          <Key>
+            <PropertyRef Name="Num_Type" />
+          </Key>
+          <Property Name="Num_Type" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nom_Type" Type="String" Nullable="false" />
+          <NavigationProperty Name="Article" Relationship="ModelGestionArticle.TypeArticle" FromRole="Type" ToRole="Article" />
+        </EntityType>
+        <EntityType Name="Article">
+          <Key>
+            <PropertyRef Name="Ref_Article" />
+          </Key>
+          <Property Name="Ref_Article" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Designation" Type="String" Nullable="false" />
+          <NavigationProperty Name="Type" Relationship="ModelGestionArticle.TypeArticle" FromRole="Article" ToRole="Type" />
+          <Property Name="Num_Type" Type="Int32" Nullable="false" />
+        </EntityType>
+        <Association Name="TypeArticle">
+          <End Type="ModelGestionArticle.Type" Role="Type" Multiplicity="1" />
+          <End Type="ModelGestionArticle.Article" Role="Article" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Type">
+              <PropertyRef Name="Num_Type" />
+            </Principal>
+            <Dependent Role="Article">
+              <PropertyRef Name="Num_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="ModelGestionArticleStoreContainer" CdmEntityContainer="ModelGestionArticleContainer">
+    <EntitySetMapping Name="TypeSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelGestionArticle.Type)">
+        <MappingFragment StoreEntitySet="TypeSet">
+          <ScalarProperty Name="Num_Type" ColumnName="Num_Type" />
+          <ScalarProperty Name="Nom_Type" ColumnName="Nom_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="ArticleSet">
+      <EntityTypeMapping TypeName="IsTypeOf(ModelGestionArticle.Article)">
+        <MappingFragment StoreEntitySet="ArticleSet">
+          <ScalarProperty Name="Ref_Article" ColumnName="Ref_Article" />
+          <ScalarProperty Name="Designation" ColumnName="Designation" />
+          <ScalarProperty Name="Num_Type" ColumnName="Num_Type" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <edmx:Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </edmx:Connection>
+    <edmx:Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="None" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+      </DesignerInfoPropertySet>
+    </edmx:Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>
